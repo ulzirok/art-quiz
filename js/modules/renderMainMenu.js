@@ -1,4 +1,3 @@
-
 import { getCategories } from './getCategories.js';
 import { renderCategories } from './renderCategories.js';
 
@@ -27,6 +26,7 @@ export function renderMainMenu() {
 }
 
 document.getElementById('header__nav-main').addEventListener('click', () => {
+  app.innerHTML = '';
   renderMainMenu()
 })
 
