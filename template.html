@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Template</title>
+</head>
+
+<body>
+
+  <!-- main page -->
+  <div class="main__card">
+    <div class="main__buttons">
+      <button class="main__btn" id="btn__artists" type="artists">Artists quiz</button>
+      <button class="main__btn" id="btn__pictures" type="pictures">Pictures quiz</button>
+    </div>
+  </div>
+  <!--  -->
+
+  <!-- settings -->
+  <div class="settings__card">
+
+    <div class="settings__header">
+      <p class="settings__text"><span><img src="./assets/icons/prev.svg" alt="prev"></span> Settings</p>
+      <img src="./assets/icons/close.svg" alt="" class="settings__btn">
+    </div>
+
+    <div class="settings__body">
+      <label class="settings__volume">Volume
+        <p>
+          <input type="range" class="settings__volume-input" value="30" min="0" max="100">
+        </p>
+        <div class="settings__volume-controls">
+          <img src="./assets/icons/mute.svg" alt="mute" width="30" height="30">
+          <img src="./assets/icons/volume.svg" alt="volume" width="25" height="25">
+        </div>
+      </label>
+      <label class="settings__time">Time game
+        <p>
+          <input type="checkbox" class="settings__time-input">
+          <span></span>
+        </p>
+      </label>
+      <div class="settings__answer">
+        <p>Time to answer</p>
+        <p class="settings__answer-controls">
+          <button class="settings__answer-btn">-</button>
+          <span>20</span>
+          <button class="settings__answer-btn">+</button>
+        </p>
+      </div>
+
+      <button class="settings__save-btn">Save</button>
+    </div>
+
+
+  </div>
+  <!--  -->
+
+  <!-- Categories -->
+  <section class="categories__card">
+    <h2 class="categories__title">Rounds</h2>
+
+    <div class="categories__items">
+      
+      <div class="categories__item">
+        <p class="categories__text">Round 1</p>
+        <img class="categories__img" src="./assets/img/0.jpg" alt="">
+      </div>
+      <div class="categories__item">
+        <p class="categories__text">Round 2</p>
+        <img class="categories__img" src="./assets/img/1.jpg" alt="">
+      </div>
+      <div class="categories__item">
+        <p class="categories__text">Round 3</p>
+        <img class="categories__img" src="./assets/img/2.jpg" alt="">
+      </div>
+      <div class="categories__item">
+        <p class="categories__text">Round 4</p>
+        <img class="categories__img" src="./assets/img/3.jpg" alt="">
+      </div>
+      <div class="categories__item">
+        <p class="categories__text">Round 5</p>
+        <img class="categories__img" src="./assets/img/4.jpg" alt="">
+      </div>
+      <div class="categories__item">
+        <p class="categories__text">Round 6</p>
+        <img class="categories__img" src="./assets/img/5.jpg" alt="">
+      </div>
+      <div class="categories__item">
+        <p class="categories__text">Round 7</p>
+        <img class="categories__img" src="./assets/img/6.jpg" alt="">
+      </div>
+      <div class="categories__item">
+        <p class="categories__text">Round 8</p>
+        <img class="categories__img" src="./assets/img/7.jpg" alt="">
+      </div>
+      <div class="categories__item">
+        <p class="categories__text">Round 9</p>
+        <img class="categories__img" src="./assets/img/8.jpg" alt="">
+      </div>
+      <div class="categories__item">
+        <p class="categories__text">Round 10</p>
+        <img class="categories__img" src="./assets/img/9.jpg" alt="">
+      </div>
+      <div class="categories__item">
+        <p class="categories__text">Round 11</p>
+        <img class="categories__img" src="./assets/img/10.jpg" alt="">
+      </div>
+      <div class="categories__item">
+        <p class="categories__text">Round 12</p>
+        <img class="categories__img" src="./assets/img/11.jpg" alt="">
+      </div>
+      
+    </div>
+  </section>
+  <!--  -->
+
+  <!-- Questions Artists -->
+  <section class="questions__card-artists">
+    <div class="questions__time-artists"><span>0:20</span></div>
+    <p class="questions__title-artists">Who is the author of this picture?</p>
+    <img src="./assets/img/0.jpg" alt="questions__img-" class="questions__img-artists">
+    <ul class="questions__indicators-artists">
+      <li class="questions__indicator-artists"></li>
+      <li class="questions__indicator-artists"></li>
+      <li class="questions__indicator-artists"></li>
+      <li class="questions__indicator-artists"></li>
+      <li class="questions__indicator-artists"></li>
+      <li class="questions__indicator-artists"></li>
+      <li class="questions__indicator-artists"></li>
+      <li class="questions__indicator-artists"></li>
+      <li class="questions__indicator-artists"></li>
+      <li class="questions__indicator-artists"></li>
+    </ul>
+    <div class="questions__answers-artists">
+      <div class="questions__answer-artists">Author 1</div>
+      <div class="questions__answer-artists">Author 2</div>
+      <div class="questions__answer-artists">Author 3</div>
+      <div class="questions__answer-artists">Author 4</div>
+    </div>
+  </section>
+  <!--  -->
+
+  <!-- Questions Pictures -->
+  <section class="questions__card-pictures">
+    <div class="questions__time-pictures"><span>0:20</span></div>
+    <p class="questions__title-pictures">Who is the author of this picture?</p>
+    <div class="questions__images-pictures">
+      <img src="./assets/img/0.jpg" alt="questions__answer" class="questions__img-pictures">
+      <img src="./assets/img/1.jpg" alt="questions__answer" class="questions__img-pictures">
+      <img src="./assets/img/2.jpg" alt="questions__answer" class="questions__img-pictures">
+      <img src="./assets/img/3.jpg" alt="questions__answer" class="questions__img-pictures">
+    </div>
+    <ul class="questions__indicators-pictures">
+      <li class="questions__indicator-pictures"></li>
+      <li class="questions__indicator-pictures"></li>
+      <li class="questions__indicator-pictures"></li>
+      <li class="questions__indicator-pictures"></li>
+      <li class="questions__indicator-pictures"></li>
+      <li class="questions__indicator-pictures"></li>
+      <li class="questions__indicator-pictures"></li>
+      <li class="questions__indicator-pictures"></li>
+      <li class="questions__indicator-pictures"></li>
+      <li class="questions__indicator-pictures"></li>
+    </ul>
+  </section>
+  <!--  -->
+
+  <!-- Modal: success, error -->
+  <section class="modal__card" id="modal">
+    <div class="modal__body">
+      <div class="modal__icon-success modal__icon-error success error"> <!-- Менять класс -->
+        <img src="./assets/icons/success.svg" alt="icon-success" width="40" height="40"> <!-- Менять картинку -->
+      </div>
+      <div class="modal__img">
+        <img src="./assets/img/0.jpg" alt="modal-img">
+      </div>
+      <h3 class="modal__title">Girl is a Pearl Earring</h3>
+      <div class="modal__author">Johannes Vermeer, 1665</div>
+      <button class="modal__btn">Next</button>
+    </div>
+  </section>
+  <!--  -->
+
+  <!-- Modal-Finish: congrats, grand, game over -->
+  <section class="modal__card-finish" id="finish">
+    <div class="modal__body-finish">
+      <div class="modal__img-finish congrats grand gameover"> <!-- Менять класс -->
+        <img src="./assets/icons/congrats.svg" alt="modal__img-finish" width="150" height="150"> <!-- Менять картинку -->
+      </div>
+      <h3 class="modal__title-finish">Congratulations!</h3>
+      <p class="modal__text-finish"><span>8 / 10</span></p>
+      <div class="modal__buttons-finish">
+        <button class="modal__btn-finish">Home</button>
+        <button class="modal__btn-finish">Next Quiz</button> <!-- Менять кнопку на: Next -->
+      </div>
+    </div>
+  </section>
+  <!--  -->
+
+
+</body>
+
+</html>
