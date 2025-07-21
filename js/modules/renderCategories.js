@@ -47,7 +47,7 @@ export async function renderCards(categoryArray, type) { //принимает м
        <img class="categories__img" src="./assets/img/${item[0].imageNum}.jpg" alt=""> 
       </div>
    `;
-   
+
   });
 
 
@@ -55,12 +55,13 @@ export async function renderCards(categoryArray, type) { //принимает м
   categoriesItemsElements.forEach((categoriesItemsElement, index) => {
     categoriesItemsElement.addEventListener('click', (e) => {
 
-     if (type === 'artists') {
-          startQuiz(chunkedCategories[index], 'artists'); //передаем массив 1 роунда с 10 вопросами по artists
-        }
-        else if (type === 'pictures') {
-          startQuiz(chunkedCategories[index], 'pictures'); //передаем массив 1 роунда с 10 вопросами по pictures
-        }
+      if (type === 'artists') {
+        startQuiz(chunkedCategories[index], 'artists', index); //передаем массив 1 роунда с 10 вопросами по artists
+
+      }
+      else if (type === 'pictures') {
+        startQuiz(chunkedCategories[index], 'pictures', index); //передаем массив 1 роунда с 10 вопросами по pictures
+      }
 
     });
 

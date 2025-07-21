@@ -393,6 +393,15 @@ input[type="range"]::-moz-range-thumb {
   border-radius: 50%;
 }
 
+.questions__indicator-artists.success,
+.questions__indicator-pictures.success {
+  background-color: green;
+}
+.questions__indicator-artists.error,
+.questions__indicator-pictures.error {
+  background-color: red;
+}
+
 .questions__answers-artists {
   width: 90%;
   display: flex;
@@ -459,8 +468,8 @@ input[type="range"]::-moz-range-thumb {
   align-items: center;
   justify-content: center;
   overflow-y: auto;
-  /* visibility: hidden; */
-  /* opacity: 0; */
+  visibility: hidden;
+  opacity: 0;
   transition: opacity 0.4s, visibility 0.4s;
 }
 .modal__body,

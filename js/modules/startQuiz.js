@@ -1,14 +1,16 @@
+import { artistCategories, pictureCategories } from './getCategories.js';
 import Quiz from './quiz.js';
 
-export function startQuiz(questionsArray, type) { //принимаем вопросы роунда
+export function startQuiz(questionsArray, type, roundIndex) { //принимаем вопросы роунда
 
   const questions = prepareQuestions(questionsArray, type); //передаем вопросы роунда
-
-  const quiz = new Quiz(questions, type); //вызов класса - передаем готовый массив с вопросами/ответами и тип
+  
+  const quiz = new Quiz(questions, type, roundIndex); //вызов класса - передаем готовый массив с вопросами/ответами и тип
   quiz.start(); //вызов метода класса Quiz
 }
 
 function prepareQuestions(arrayQuestionsOfRound, type) { //принимаем вопросы роунда
+  
   return arrayQuestionsOfRound.map((arrayQuestionOfRound) => {
 
     const question = {
