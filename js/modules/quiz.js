@@ -163,7 +163,7 @@ export default class Quiz {
     modalBody.appendChild(modalIcon);
 
     const imgIcon = document.createElement('img');
-    imgIcon.src = isCorrect ? './assets/icons/success.svg' : './assets/icons/error.svg';
+    imgIcon.src = isCorrect ? 'assets/icons/success.svg' : 'assets/icons/error.svg';
     imgIcon.alt = isCorrect ? 'icon-success' : 'icon-error';
     imgIcon.width = 40;
     imgIcon.height = 40;
@@ -174,7 +174,7 @@ export default class Quiz {
     modalBody.appendChild(modalImg);
 
     const imgModalImg = `
-      <img src="./assets/img/${globalArray[globalIndex].imageNum}.jpg" alt="modal-img">
+      <img src="assets/img/${globalArray[globalIndex].imageNum}.jpg" alt="modal-img">
       `;
     modalImg.innerHTML = imgModalImg;
 
