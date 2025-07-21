@@ -1,6 +1,6 @@
 
 import { artistCategories, pictureCategories, getCategories } from './getCategories.js';
-import Quiz from './quiz.js';
+import { startQuiz } from './startQuiz.js';
 
 export async function renderCategories(type) {
   await getCategories();
@@ -55,17 +55,12 @@ export async function renderCards(categoryArray, type) { //принимает м
   categoriesItemsElements.forEach((categoriesItemsElement, index) => {
     categoriesItemsElement.addEventListener('click', (e) => {
 
-      try {
-        if (type === 'artists') {
-          new Quiz(chunkedCategories[index], 'artists'); //передаем массив 1 роунда с 10 вопросами по artists
+     if (type === 'artists') {
+          startQuiz(chunkedCategories[index], 'artists'); //передаем массив 1 роунда с 10 вопросами по artists
         }
         else if (type === 'pictures') {
-          new Quiz(chunkedCategories[index], 'pictures'); //передаем массив 1 роунда с 10 вопросами по pictures
+          startQuiz(chunkedCategories[index], 'pictures'); //передаем массив 1 роунда с 10 вопросами по pictures
         }
-      }
-      catch (err) {
-        console.error('Ошибка при создании Quiz:', err);
-      }
 
     });
 
