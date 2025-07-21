@@ -1,18 +1,19 @@
-import RenderQuiz from '../modules/renderQuiz.js';
+
 import { artistCategories, pictureCategories, getCategories } from './getCategories.js';
+import Quiz from './quiz.js';
 
 export async function renderCategories(type) {
   await getCategories();
 
   if (type === 'artists') {
-    renderCards(artistCategories); //передаем массив artistCategories
+    renderCards(artistCategories, 'artists'); //передаем массив artistCategories
   }
   else if (type === 'pictures') {
-    renderCards(pictureCategories); //передаем массив pictureCategories
+    renderCards(pictureCategories, 'pictures'); //передаем массив pictureCategories
   }
 }
 
-export function renderCards(categoryArray) {
+export async function renderCards(categoryArray, type) { //принимает массив (artists или pictures)
   const app = document.getElementById('app');
   app.innerHTML = '';
 
@@ -31,7 +32,7 @@ export function renderCards(categoryArray) {
 
   app.appendChild(categoriesCard);
 
-  const chunkedCategories = chunkedArray(categoryArray, 10);
+  const chunkedCategories = chunkedArray(categoryArray, 10); //передаем массив (artists или pictures) и количсетво эл-тов внутри
 
   if (!Array.isArray(categoryArray) || categoryArray.length === 0) {
     categoriesItems.textContent = 'No categories found.';
@@ -41,22 +42,48 @@ export function renderCards(categoryArray) {
   chunkedCategories.forEach((item, index) => {
 
     categoriesItems.innerHTML += `
-      <div class="categories__item">
+      <div class="categories__item" id="categories__item" data-number="${index}">
        <p class="categories__text">Round ${index + 1}</p>
        <img class="categories__img" src="./assets/img/${item[0].imageNum}.jpg" alt=""> 
       </div>
    `;
+   
+  });
+
+
+  const categoriesItemsElements = document.querySelectorAll('.categories__item');
+  categoriesItemsElements.forEach((categoriesItemsElement, index) => {
+    categoriesItemsElement.addEventListener('click', (e) => {
+
+      try {
+        if (type === 'artists') {
+          new Quiz(chunkedCategories[index], 'artists'); //передаем массив 1 роунда с 10 вопросами по artists
+        }
+        else if (type === 'pictures') {
+          new Quiz(chunkedCategories[index], 'pictures'); //передаем массив 1 роунда с 10 вопросами по pictures
+        }
+      }
+      catch (err) {
+        console.error('Ошибка при создании Quiz:', err);
+      }
+
+    });
+
   });
 
 }
 
-function chunkedArray(array, size) {
+function chunkedArray(array, size) { //принимает массив и количество для инкремента
   const category = [];
 
-  for (let i = 0; i < array.length; i += size) {
-    category.push(array.slice(i, i + size));
+  for (let i = 0; i < array.length; i += size) { //на каждом цикле i увеличивается на 10
+    category.push(array.slice(i, i + size)); //вырезаем по 10, пушим в новый массив
   }
 
-  return category;
+  return category; //будет 12 массивов (из 12 циклов)
 }
+
+
+
+
 

@@ -15,12 +15,12 @@ export function renderMainMenu() {
 
   document.getElementById('btn__artists').addEventListener('click', async () => {
     await getCategories();
-    renderCategories('artists'); //тип кнопки
+    renderCategories('artists'); //тип кнопки artists
   });
 
   document.getElementById('btn__pictures').addEventListener('click', async () => {
     await getCategories();
-    renderCategories('pictures'); //тип кнопки
+    renderCategories('pictures'); //тип кнопки pictures
   });
   
 }
@@ -29,6 +29,7 @@ document.getElementById('header__nav-main').addEventListener('click', () => {
   app.innerHTML = '';
   renderMainMenu()
 })
+
 
 
 
