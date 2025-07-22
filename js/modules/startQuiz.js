@@ -1,11 +1,15 @@
 import { artistCategories, pictureCategories } from './getCategories.js';
 import Quiz from './quiz.js';
 
-export function startQuiz(questionsArray, type, roundIndex) { //принимаем вопросы роунда
-
+export function startQuiz(questionsArray, type, roundIndex, chunkedCategories) { //принимаем вопросы роунда
+  // console.log(questionsArray);
+  console.log(chunkedCategories);
+  console.log(chunkedCategories.length);
+  console.log(chunkedCategories[roundIndex]);
+  
   const questions = prepareQuestions(questionsArray, type); //передаем вопросы роунда
   
-  const quiz = new Quiz(questions, type, roundIndex); //вызов класса - передаем готовый массив с вопросами/ответами и тип
+  const quiz = new Quiz(questions, type, roundIndex, chunkedCategories); //вызов класса - передаем готовый массив с вопросами/ответами и тип
   quiz.start(); //вызов метода класса Quiz
 }
 
@@ -50,3 +54,5 @@ function getAnswers(correctAuthor, arrayAuthorsAll) {
   const answers = [...randomWrong, correctAuthor];
   return answers.sort(() => Math.random() - 0.5); //перемешиваем элементы массива с вопросами (4 вопроса, включая правильный), чтобы правильный не был всегда последним
 }
+
+

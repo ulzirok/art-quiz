@@ -134,6 +134,7 @@ body {
   outline: none;
   border-radius: 60px;
   color: #fff;
+  font-size: 25px;
   border: 1px solid #fff;
   width: 287px;
   height: 62px;
@@ -385,20 +386,18 @@ input[type="range"]::-moz-range-thumb {
   justify-content: space-between;
 }
 
-.questions__indicator-artists,
-.questions__indicator-pictures {
+.questions__indicator,
+.questions__indicator {
   width: 15px;
   height: 15px;
   border: 1px solid #fff;
   border-radius: 50%;
 }
 
-.questions__indicator-artists.success,
-.questions__indicator-pictures.success {
+.questions__indicator.success {
   background-color: green;
 }
-.questions__indicator-artists.error,
-.questions__indicator-pictures.error {
+.questions__indicator.error {
   background-color: red;
 }
 
@@ -472,7 +471,7 @@ input[type="range"]::-moz-range-thumb {
   opacity: 0;
   transition: opacity 0.4s, visibility 0.4s;
 }
-.modal__body,
+.modal__body, 
 .modal__body-finish {
   width: 1000px;
   padding: 30px;
@@ -509,7 +508,8 @@ input[type="range"]::-moz-range-thumb {
   border-radius: 10px;
 }
 
-.modal__card.open {
+.modal__card.open, 
+.modal__card-finish.open {
   visibility: visible;
   opacity: 1;
 }
@@ -688,8 +688,8 @@ input[type="range"]::-moz-range-thumb {
     width: 100%;
   }
 
-  .questions__indicator-artists,
-  .questions__indicator-pictures {
+  .questions__indicator,
+  .questions__indicator {
     width: 13px;
     height: 13px;
     border: 1px solid #fff;
@@ -752,8 +752,8 @@ input[type="range"]::-moz-range-thumb {
     width: 100%;
   }
 
-  .questions__indicator-artists,
-  .questions__indicator-pictures {
+  .questions__indicator,
+  .questions__indicator {
     width: 13px;
     height: 13px;
     border: 1px solid #fff;
@@ -816,8 +816,8 @@ input[type="range"]::-moz-range-thumb {
     width: 100%;
   }
 
-  .questions__indicator-artists,
-  .questions__indicator-pictures {
+  .questions__indicator,
+  .questions__indicator {
     width: 13px;
     height: 13px;
     border: 1px solid #fff;
