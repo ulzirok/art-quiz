@@ -34,6 +34,7 @@ export async function renderCards(categoryArray, type) { //принимает м
 
   const chunkedCategories = chunkedArray(categoryArray, 10); //передаем массив (artists или pictures) и количсетво эл-тов внутри
 
+
   if (!Array.isArray(categoryArray) || categoryArray.length === 0) {
     categoriesItems.textContent = 'No categories found.';
     return;
@@ -43,11 +44,17 @@ export async function renderCards(categoryArray, type) { //принимает м
 
     categoriesItems.innerHTML += `
       <div class="categories__item" id="categories__item" data-number="${index}">
-       <p class="categories__text">Round ${index + 1}</p>
+       <p class="categories__text">Round ${index + 1} <span>(7/10)</span></p>
        <img class="categories__img" src="./assets/img/${item[0].imageNum}.jpg" alt=""> 
       </div>
    `;
 
+    if (chunkedCategories[index].length + 2 === chunkedCategories.length) {
+      document.querySelector('.categories__img').style.filter = 'grayscale(0)';
+      
+    }
+    
+    
   });
 
 
@@ -56,11 +63,11 @@ export async function renderCards(categoryArray, type) { //принимает м
     categoriesItemsElement.addEventListener('click', (e) => {
 
       if (type === 'artists') {
-        startQuiz(chunkedCategories[index], 'artists', index); //передаем массив 1 роунда с 10 вопросами по artists
+        startQuiz(chunkedCategories[index], 'artists', index, chunkedCategories); //передаем массив 1 роунда с 10 вопросами по artists
 
       }
       else if (type === 'pictures') {
-        startQuiz(chunkedCategories[index], 'pictures', index); //передаем массив 1 роунда с 10 вопросами по pictures
+        startQuiz(chunkedCategories[index], 'pictures', index, chunkedCategories); //передаем массив 1 роунда с 10 вопросами по pictures
       }
 
     });
