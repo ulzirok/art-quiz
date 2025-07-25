@@ -359,7 +359,7 @@ input[type="range"]::-moz-range-thumb {
 }
 
 .categories__item {
-   position: relative;
+  position: relative;
 }
 
 .categories__items {
@@ -502,7 +502,7 @@ input[type="range"]::-moz-range-thumb {
   opacity: 0;
   transition: opacity 0.4s, visibility 0.4s;
 }
-.modal__body, 
+.modal__body,
 .modal__body-finish {
   width: 1000px;
   padding: 30px;
@@ -539,7 +539,7 @@ input[type="range"]::-moz-range-thumb {
   border-radius: 10px;
 }
 
-.modal__card.open, 
+.modal__card.open,
 .modal__card-finish.open {
   visibility: visible;
   opacity: 1;
@@ -568,9 +568,9 @@ input[type="range"]::-moz-range-thumb {
   transform: scale(1.05);
 }
 
-.modal__card.open .modal__body, 
+.modal__card.open .modal__body,
 .modal__card-finish.open .modal__body-finish {
-  transform: scale(1)
+  transform: scale(1);
 }
 
 .modal__img-finish {
@@ -610,6 +610,7 @@ input[type="range"]::-moz-range-thumb {
   width: 260px;
   height: 250px;
   position: relative;
+  transition: 1s;
 }
 
 .imagesFinal__img {
@@ -628,8 +629,7 @@ input[type="range"]::-moz-range-thumb {
 .imagesFinal__overlay {
   position: absolute;
   top: 0;
-  /* left: -300%; */
-  left: 0;
+  left: -100vw;
   background-color: #ffbca2;
   border-radius: 12px;
   width: 100%;
@@ -644,11 +644,15 @@ input[type="range"]::-moz-range-thumb {
   text-align: start;
   padding: 10px;
   color: #000;
+  cursor: pointer;
+  transition: 0.3s;
 }
 
 .imagesFinal__overlay.open {
   left: 0;
+  transition: 0.3s;
 }
+
 
 
 
@@ -711,7 +715,7 @@ input[type="range"]::-moz-range-thumb {
     width: 220px;
     height: 180px;
   }
-  
+
   .imagesFinal__card {
     width: 90%;
     padding: 0px;
@@ -840,7 +844,7 @@ input[type="range"]::-moz-range-thumb {
     width: 10px;
     height: 10px;
   }
-  
+
   .imagesFinal__card {
     width: 90%;
     padding-top: 20px;
@@ -886,7 +890,7 @@ input[type="range"]::-moz-range-thumb {
     width: 350px;
     height: 30px;
   }
-  
+
   .questions__images-pictures {
     width: 500px;
     flex-wrap: wrap;
@@ -911,7 +915,7 @@ input[type="range"]::-moz-range-thumb {
     height: 40px;
     font-size: 16px;
   }
-  
+
   .imagesFinal__card {
     width: 100%;
     padding: 0px;
@@ -1018,13 +1022,13 @@ input[type="range"]::-moz-range-thumb {
     width: 280px;
     padding: 20px 0;
   }
-  
+
   .imagesFinal__card {
     width: 100%;
     padding: 0px;
     justify-content: center;
   }
-  
+
   .imagesFinal__item {
     width: 130px;
     height: 130px;

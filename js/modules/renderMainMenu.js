@@ -22,12 +22,12 @@ export function renderMainMenu() {
     await getCategories();
     renderCategories('pictures'); //тип кнопки pictures
   });
-  
+
 }
 
 document.getElementById('header__nav-main').addEventListener('click', () => {
   app.innerHTML = '';
-  renderMainMenu()
+  renderMainMenu();
 })
 
 

@@ -1,16 +1,16 @@
 import { artistCategories, pictureCategories } from './getCategories.js';
 import Quiz from './quiz.js';
 
-export function startQuiz(questionsArray, type, roundIndex, chunkedCategories) { //принимаем вопросы роунда
-  
-  const questions = prepareQuestions(questionsArray, type); //передаем вопросы роунда
-  
-  const quiz = new Quiz(questions, type, roundIndex, chunkedCategories); //вызов класса - передаем готовый массив с вопросами/ответами и тип
-  quiz.start(); //вызов метода класса Quiz
+export function startQuiz(questionsArray, type, roundIndex, chunkedCategories) { //Готовимся к Викторине
+
+  const questions = prepareQuestions(questionsArray, type); //вопросы для Викторины
+
+  const quiz = new Quiz(questions, type, roundIndex, chunkedCategories); //вызов класса Quiz - вызываем Викторину
+  quiz.start(); //вызов метода класса Quiz - вызываем вопрос
 }
 
-function prepareQuestions(arrayQuestionsOfRound, type) { //принимаем вопросы роунда
-  
+function prepareQuestions(arrayQuestionsOfRound, type) { //готовим вопросы для Викторины
+
   return arrayQuestionsOfRound.map((arrayQuestionOfRound) => {
 
     const question = {
@@ -20,9 +20,9 @@ function prepareQuestions(arrayQuestionsOfRound, type) { //принимаем в
 
       answers: type === 'artists' ? getAllAuthors(arrayQuestionOfRound.author, arrayQuestionsOfRound) : getAllImages(arrayQuestionOfRound.imageNum, arrayQuestionsOfRound),
     };
-    
+
     if (type === 'artists') {
-      question.image = arrayQuestionOfRound.imageNum
+      question.image = arrayQuestionOfRound.imageNum;
     }
 
     return question;
