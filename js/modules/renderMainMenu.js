@@ -16,13 +16,13 @@ export function renderMainMenu() {
           `;
 
   document.getElementById('btn__artists').addEventListener('click', async () => {
-    playSound('assets/sound/gamestart.mp3');
+    playSound('/assets/sound/gamestart.mp3');
     await getCategories();
     renderCategories('artists'); //тип кнопки artists
   });
 
   document.getElementById('btn__pictures').addEventListener('click', async () => {
-    playSound('assets/sound/gamestart.mp3');
+    playSound('/assets/sound/gamestart.mp3');
     await getCategories();
     renderCategories('pictures'); //тип кнопки pictures
   });

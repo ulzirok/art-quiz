@@ -87,13 +87,13 @@ export async function renderCards(categoryArray, type) { //показываем 
       categoriesItemScore.addEventListener('click', (e) => { //При нажатии на кнопку score - рендерим картинки всех раундов
 
         e.stopPropagation();
-        
+
         if (currentAudio) { //останавливаем предыдущий аудио
           currentAudio.pause();
           currentAudio.currentTime = 0;
         }
         playSound('assets/sound/gamestart.mp3'); //включаем аудио
-        
+
         app.innerHTML = '';
         const imagesFinalCard = document.createElement('section');
         imagesFinalCard.classList.add('imagesFinal__card');
@@ -154,7 +154,7 @@ export async function renderCards(categoryArray, type) { //показываем 
         currentAudio.pause();
         currentAudio.currentTime = 0;
       }
-      playSound('assets/sound/choice.mp3'); //включаем аудио
+      playSound('/assets/sound/choice.mp3'); //включаем аудио
 
       if (type === 'artists') {
         startQuiz(chunkedCategories[index], 'artists', index, chunkedCategories); //передаем массив 1 роунда с 10 вопросами по artists
