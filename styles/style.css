@@ -505,11 +505,11 @@ input[type="range"]::-moz-range-thumb {
 .modal__body,
 .modal__body-finish {
   width: 1000px;
-  padding: 30px;
+  padding: 20px;
   z-index: 1;
   background-color: #fff;
   border-radius: 10px;
-  margin: 30px 15px;
+  /* margin: 30px 15px; */
   color: #010101;
   font-size: 18px;
   box-shadow: 0px 0px 17px -7px rgba(34, 60, 80, 0.2);
@@ -526,8 +526,8 @@ input[type="range"]::-moz-range-thumb {
 
 .modal__img,
 .modal__img-finish {
-  width: 300px;
-  height: 300px;
+  width: 250px;
+  height: 250px;
   margin: 0 auto;
   margin-bottom: 10px;
 }
