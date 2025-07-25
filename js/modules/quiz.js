@@ -13,27 +13,18 @@ export default class Quiz {
     this.score = 0;
     this.chunkedCategories = chunkedCategories;
     this.answers = [];
-    console.log(this.chunkedCategories);
-    
-    console.log(questions);
-    
+
+    // console.log(this.chunkedCategories);
+    // console.log(questions);
   }
 
-  start() { //начинаем квиз - рендерим вопрос (с 1-вопроса 1-категории)
-    const currentQuestion = this.questions[this.questionIndex]; //текущий роунд (с 0 по 10)
-    // console.log(currentQuestion);
-
+  start() { //начало Викторины - вызываем текущий вопрос
+    const currentQuestion = this.questions[this.questionIndex];
     this.renderQuiz(currentQuestion);
-    
-
   }
 
-  renderQuiz(question) { //рендер вопроса
+  renderQuiz(question) { //рендер вопросов - Начало текущего раунда
     console.log(question);
-    // console.log(question.image);
-    // console.log(question.answers);
-   
-
 
     const app = document.getElementById('app');
     app.innerHTML = '';
@@ -51,12 +42,11 @@ export default class Quiz {
     const span = document.createElement('span');
     time.appendChild(span);
 
-
-    if (this.type === 'artists') {
+    if (this.type === 'artists') { //вопросы для Artists
 
       const titleArtist = document.createElement('p');
       titleArtist.classList.add('questions__title-artists');
-      titleArtist.textContent = question.question; //вопрос
+      titleArtist.textContent = question.question;
 
       sectionArtists.appendChild(titleArtist);
 
@@ -96,12 +86,11 @@ export default class Quiz {
       app.appendChild(sectionArtists);
     }
 
-
-    if (this.type === 'pictures') {
+    if (this.type === 'pictures') { //вопросы для Pictures
 
       const titlePictures = document.createElement('p');
       titlePictures.classList.add('questions__title-pictures');
-      titlePictures.textContent = question.question; //вопрос
+      titlePictures.textContent = question.question;
 
       sectionPictures.appendChild(titlePictures);
 
@@ -135,39 +124,35 @@ export default class Quiz {
       app.appendChild(sectionPictures);
     }
 
-    document.querySelectorAll('.questions__answers-artists').forEach((answer) => {
+    document.querySelectorAll('.questions__answers-artists').forEach((answer) => { //ответ пользователя по Artists
       answer.addEventListener('click', (event) => {
 
         const selectedAnswer = event.target.textContent;
-        this.handleAnswer(selectedAnswer, question, 'artists'); //передаем выбранный ответ по Artists
+        this.handleAnswer(selectedAnswer, question, 'artists'); //прверка ответа
       });
     });
 
-    document.querySelectorAll('.questions__img-pictures').forEach((answer) => {
+    document.querySelectorAll('.questions__img-pictures').forEach((answer) => { //ответ пользователя по Pictures
       answer.addEventListener('click', (event) => {
 
         const selectedSrc = event.target.src;
         const splitSrc = selectedSrc.split('/img/')[1];
         const selectedAnswer = splitSrc.replace('.jpg', '');
 
-        this.handleAnswer(selectedAnswer, question, 'pictures'); //передаем выбранный ответ по Pictures
-
+        this.handleAnswer(selectedAnswer, question, 'pictures'); //проверка ответа
       });
-
     });
-
-
 
   }
 
-  handleAnswer(selectedAnswer, question, type) {  //рендерим правильный ответ и увеличиваем score
+  handleAnswer(selectedAnswer, question, type) {  //проверяем ответы пользователя
 
     const isCorrect = selectedAnswer === question.correctAnswer; //вернет true/false
 
-    this.showModal(isCorrect, question, type);
+    this.showModal(isCorrect, question, type); //показ результата текущего вопроса
   }
 
-  showModal(isCorrect, question, type) { //рендер правильного ответа и увеличение score
+  showModal(isCorrect, question, type) { //рендер результата текущего вопроса и увеличение score
 
     let globalArray; //исходный массив artistCategories/pictureCategories (по 120 каждый)
     const globalIndex = this.roundIndex * 10 + this.questionIndex; //индекс в исходном массиве artistCategories/pictureCategories 
@@ -231,70 +216,57 @@ export default class Quiz {
 
     modalCard.classList.toggle('open'); //открываем модалку
 
-
     document.querySelector('.modal__btn').addEventListener('click', () => { //кнопка next question
 
       if (isCorrect) {
-        this.score++;
+        this.score++; //если правильно, увеличиваем score
       }
 
-      this.answers.push(isCorrect);
+      this.answers.push(isCorrect); //добавляем правильный ответ в массив answers
 
-      this.nextQuestion(modalCard, question);
-
+      this.nextQuestion(modalCard, question); //переход к следующему вопросу
     });
 
   }
 
-  nextQuestion(modalCard, question) { //рендерим следующий вопрос, если последний -  рендерим результат
+  nextQuestion(modalCard, question) { //вызываем следующий вопрос. Конец текущего раунда
 
-    if (this.questionIndex !== this.questions.length - 1) { //не последний вопрос?
-      this.questionIndex++;
+    if (this.questionIndex !== this.questions.length - 1) { //проверка - не последний вопрос?
+      this.questionIndex++; //нет - индекс вопроса увеличиваем
       modalCard.classList.toggle('open'); //закрываем модалку
 
-      this.start(); //следующий вопрос
-
+      this.start(); //вызываем следующий вопрос
     }
-    else { //последний вопрос? (значит 1-роунд окончен)
+    else { //последний вопрос? да - значит 1-роунд окончен
       modalCard.remove();
-      
-      let progress = getProgress();
-    
-    const currentType = this.type; //тип категории
-    const currentRoundIndex = this.roundIndex; //номер пройденного раунда
 
-    if (!progress[currentType]) {
-      progress[currentType] = {}; // создаём объект, если его ещё нет
-    }
+      let progress = getProgress(); //получаем данные из localStorage
 
-    progress[currentType][currentRoundIndex] = {
-  currentQuestionIndex: this.questionIndex,
-  userScore: this.score,
-  userAnswers: this.answers,
-  // currentImages: this.questions.map(q => q.image),
-  
-  currImages: this.chunkedCategories[this.roundIndex].map(q => q.imageNum),
-  currName: this.chunkedCategories[this.roundIndex].map(q => q.name),
-  currAuthor: this.chunkedCategories[this.roundIndex].map(q => q.author),
-  currYear: this.chunkedCategories[this.roundIndex].map(q => q.year),
-  
-  
-  // infoList: this.questions.map(q => ({
-  //   name: q.name,
-  //   author: q.author,
-  //   year: q.year,
-  // }))
-};
+      const currentType = this.type;
+      const currentRoundIndex = this.roundIndex;
 
-    saveProgress(progress); //Сохраняем прогресс в localStorage
-      
+      if (!progress[currentType]) {
+        progress[currentType] = {}; // создаём объект, если типа ещё нет (т.к у нас 2 типа)
+      }
 
-      this.showResult(question);
+      progress[currentType][currentRoundIndex] = {
+        currentQuestionIndex: this.questionIndex,
+        userScore: this.score,
+        userAnswers: this.answers,
+        currImages: this.chunkedCategories[this.roundIndex].map(q => q.imageNum),
+        currName: this.chunkedCategories[this.roundIndex].map(q => q.name),
+        currAuthor: this.chunkedCategories[this.roundIndex].map(q => q.author),
+        currYear: this.chunkedCategories[this.roundIndex].map(q => q.year),
+      };
+
+      saveProgress(progress); //Сохраняем прогресс (данные) по текущему раунду в localStorage
+
+      this.showResult(question); //показ резултата текущего раунда
     }
 
   }
 
-  showResult(question) { //рендер результата, рендерим 12 категории
+  showResult(question) { //рендер результата текущего раунда. Переходы по кнопкам
 
     const app = document.getElementById('app');
 
@@ -381,34 +353,32 @@ export default class Quiz {
     modalBodyFinish.appendChild(modalButtonsFinish);
 
     app.appendChild(modalCardFinish);
-    modalCardFinish.classList.toggle('open'); //показываем модалку - результат
+    modalCardFinish.classList.toggle('open'); //показываем модалку - результат текущего раунда
 
+    //
 
-
-    
-
-
-
-    const buttonsFinish = document.querySelector('.modal__buttons-finish');
+    const buttonsFinish = document.querySelector('.modal__buttons-finish');  //Клики по кнопкам: next,home,next-quiz,no/yes
     const btnFinish = buttonsFinish.querySelectorAll('.modal__btn-finish');
     btnFinish.forEach((btn) => {
       btn.addEventListener('click', () => {
         modalCardFinish.classList.toggle('open'); //скрываем модалку - результат
         app.innerHTML = ''; //очищаем страницу
 
-        if (btn.classList.contains('next')) { //переход на следующую категорию (на роунд 2) 
-          this.handleRoundComplete(); //
+        if (btn.classList.contains('next')) { //переход на страницу 12 раундов
+          this.nextQuiz();
         }
         if (btn.classList.contains('home')) { //переход на главную
-          renderMainMenu(); //работает
+          renderMainMenu();
         }
-        if (btn.classList.contains('next-quiz')) { //переход на следующую категорию (на роунд 2) 
-          this.handleRoundComplete(); //
+        if (btn.classList.contains('next-quiz')) { //переход на страницу 12 раундов
+          this.nextQuiz();
         }
         if (btn.classList.contains('no')) { //переход на главную
-          renderMainMenu(); //работает
+          renderMainMenu();
         }
-        if (btn.classList.contains('yes')) { //начать заново текущие 10 вопросов (перезапуск)//сброс индикаторов //сброс ответов в localstorage??
+        if (btn.classList.contains('yes')) { //начать текущий раунд заново (перезапуск раунда)
+
+          //сброс индикаторов //сброс ответов в localstorage??
 
           // const indicators = document.querySelectorAll('.questions__indicator');
           // console.log(indicators);
@@ -420,7 +390,7 @@ export default class Quiz {
 
           this.questionIndex = 0;
           this.score = 0;
-          this.start(); //работает
+          this.start();
 
         }
 
@@ -429,42 +399,11 @@ export default class Quiz {
 
   }
 
-  handleRoundComplete() { //рендер 12 категории и ?рендерим следующий раунд
+  nextQuiz() { //переход на страницу 12 раундов
 
-    renderCategories(this.type);
-
-
-
-    // if (this.chunkedCategories.length === (this.questions.length + 2) {
-    //}
-
-
-    // отображаем опять категории - список 12 категории //
-    // пройденные категории - 1. картинка уже цветная, 2. поверх внизу картинки оверлай с надписью score, 3. сверху картинки появляется score
-    //при нажатии на 1 категорию - рендерится 10 картинок этой категории 
-    //при нажатии на 1 картинку - поверх картинки появится оверлай с информацией о картинке (появляется слева и закрывает картинку и при нажатии на них они исчезают обратно)
-  }
-
-
-  nextQuiz() { //рендер следующего раунда 
-
-    // console.log(this.roundIndex);
-    // console.log(this.chunkedCategories.length); //роунд12? 
-
-
-    // if (this.roundIndex !== this.chunkedCategories.length - 1) { //не последний роунд?
-    //   this.roundIndex++;
-
-    //   startQuiz(this.chunkedCategories[this.roundIndex], this.type, this.roundIndex, this.chunkedCategories);
-
-    // }
-    // else { //последний роунд?
-
-    // }
+    renderCategories(this.type); //передаем текущий тип
 
   }
 
 
-
-
-} //конец класса
+} //конец класса Quiz
