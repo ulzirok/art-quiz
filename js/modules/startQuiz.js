@@ -2,10 +2,6 @@ import { artistCategories, pictureCategories } from './getCategories.js';
 import Quiz from './quiz.js';
 
 export function startQuiz(questionsArray, type, roundIndex, chunkedCategories) { //принимаем вопросы роунда
-  // console.log(questionsArray);
-  console.log(chunkedCategories);
-  console.log(chunkedCategories.length);
-  console.log(chunkedCategories[roundIndex]);
   
   const questions = prepareQuestions(questionsArray, type); //передаем вопросы роунда
   
