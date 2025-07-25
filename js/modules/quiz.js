@@ -181,10 +181,10 @@ export default class Quiz {
     const isCorrect = selectedAnswer === question.correctAnswer; //вернет true/false
 
     if (isCorrect) {
-      this.playSound('/assets/sound/correct.mp3');
+      this.playSound('assets/sound/correct.mp3');
     }
     else {
-      this.playSound('/assets/sound/wrong.mp3');
+      this.playSound('assets/sound/wrong.mp3');
     }
 
     this.showModal(isCorrect, question, type); //показ результата текущего вопроса
@@ -392,7 +392,7 @@ export default class Quiz {
     modalBodyFinish.appendChild(modalButtonsFinish);
     app.appendChild(modalCardFinish);
     modalCardFinish.classList.toggle('open'); //показываем модалку - результат текущего раунда
-    this.playSound('/assets/sound/end_game.mp3');
+    this.playSound('assets/sound/end_game.mp3');
     //
 
     const buttonsFinish = document.querySelector('.modal__buttons-finish');  //Клики по кнопкам: next,home,next-quiz,no/yes

@@ -154,7 +154,7 @@ export async function renderCards(categoryArray, type) { //показываем 
         currentAudio.pause();
         currentAudio.currentTime = 0;
       }
-      playSound('/assets/sound/choice.mp3'); //включаем аудио
+      playSound('assets/sound/choice.mp3'); //включаем аудио
 
       if (type === 'artists') {
         startQuiz(chunkedCategories[index], 'artists', index, chunkedCategories); //передаем массив 1 роунда с 10 вопросами по artists
