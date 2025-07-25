@@ -16,16 +16,42 @@ export default class Quiz {
 
     // console.log(this.chunkedCategories);
     // console.log(questions);
+
+    this.soundEnabled = true; //по умолчанию вкл
+    this.soundVolume = 0.5; //по умолчанию
+    this.audio = null;
+
   }
-  
+
   playSound(srcSound) {
-    const audio = new Audio(srcSound)
-    audio.play()
+    if (!this.soundEnabled) {
+      return;
+    }
+
+    if (this.audio) {
+      this.audio.pause();
+      this.audio.currentTime = 0;
+    }
+
+    this.audio = new Audio(srcSound);
+    this.audio.play();
+  }
+
+  getSoundSettings() { //получение настроенных данных из localStorage
+    const savedSettings = JSON.parse(localStorage.getItem('settings'));
+
+    this.soundEnabled = savedSettings?.soundEnabled ?? true; //если пользователь еще не настроил (?? - если значение из localStorage - undefined Или null то soundEnabled будет true, иначе установленное значение)
+    this.soundVolume = savedSettings?.volume ?? 0.5;
+
+    this.soundEnabled = savedSettings?.soundEnabled ?? true;
+    this.soundVolume = savedSettings?.volume ?? 0.5;
   }
 
   start() { //начало Викторины - вызываем текущий вопрос
     const currentQuestion = this.questions[this.questionIndex];
     this.renderQuiz(currentQuestion);
+
+    this.getSoundSettings();
   }
 
   renderQuiz(question) { //рендер вопросов - Начало текущего раунда
@@ -131,7 +157,7 @@ export default class Quiz {
 
     document.querySelectorAll('.questions__answer-artists').forEach((answer) => { //ответ пользователя по Artists
       answer.addEventListener('click', (event) => {
-        event.stopPropagation()
+        event.stopPropagation();
         const selectedAnswer = event.target.textContent;
         this.handleAnswer(selectedAnswer, question, 'artists'); //прверка ответа
       });
@@ -139,7 +165,7 @@ export default class Quiz {
 
     document.querySelectorAll('.questions__img-pictures').forEach((answer) => { //ответ пользователя по Pictures
       answer.addEventListener('click', (event) => {
-        event.stopPropagation()
+        event.stopPropagation();
         const selectedSrc = event.target.src;
         const splitSrc = selectedSrc.split('/img/')[1];
         const selectedAnswer = splitSrc.replace('.jpg', '');
@@ -153,6 +179,13 @@ export default class Quiz {
   handleAnswer(selectedAnswer, question, type) {  //проверяем ответы пользователя
 
     const isCorrect = selectedAnswer === question.correctAnswer; //вернет true/false
+
+    if (isCorrect) {
+      this.playSound('/assets/sound/correct.mp3');
+    }
+    else {
+      this.playSound('/assets/sound/wrong.mp3');
+    }
 
     this.showModal(isCorrect, question, type); //показ результата текущего вопроса
   }
@@ -355,11 +388,11 @@ export default class Quiz {
     <button class="modal__btn-finish yes">Yes</button>
     `;
     }
-    modalBodyFinish.appendChild(modalButtonsFinish);
 
+    modalBodyFinish.appendChild(modalButtonsFinish);
     app.appendChild(modalCardFinish);
     modalCardFinish.classList.toggle('open'); //показываем модалку - результат текущего раунда
-
+    this.playSound('/assets/sound/end_game.mp3');
     //
 
     const buttonsFinish = document.querySelector('.modal__buttons-finish');  //Клики по кнопкам: next,home,next-quiz,no/yes
@@ -388,7 +421,6 @@ export default class Quiz {
         if (btn.classList.contains('yes')) { //начать текущий раунд заново (перезапуск раунда)
 
           const indicators = document.querySelectorAll('.questions__indicator');
-          console.log(indicators);
 
           indicators.forEach(indicator => {
             indicator.classList.remove('success');
