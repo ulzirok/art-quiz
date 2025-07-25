@@ -1,7 +1,7 @@
 import { artistCategories, pictureCategories, getCategories } from './getCategories.js';
 import { startQuiz } from './startQuiz.js';
 import { renderMainMenu } from './renderMainMenu.js';
-import RenderFinal from './renderFinal.js';
+import { getProgress, saveProgress } from './progressStorage.js';
 import { renderCategories } from './renderCategories.js';
 
 export default class Quiz {
@@ -13,20 +13,26 @@ export default class Quiz {
     this.score = 0;
     this.chunkedCategories = chunkedCategories;
     this.answers = [];
-    console.log(this.questions);
-
+    console.log(this.chunkedCategories);
+    
+    console.log(questions);
+    
   }
 
   start() { //начинаем квиз - рендерим вопрос (с 1-вопроса 1-категории)
-    const currentQuestion = this.questions[this.questionIndex]; //текущий вопрос (с 0 по 10)
+    const currentQuestion = this.questions[this.questionIndex]; //текущий роунд (с 0 по 10)
     // console.log(currentQuestion);
 
     this.renderQuiz(currentQuestion);
+    
 
   }
 
   renderQuiz(question) { //рендер вопроса
     console.log(question);
+    // console.log(question.image);
+    // console.log(question.answers);
+   
 
 
     const app = document.getElementById('app');
@@ -102,7 +108,7 @@ export default class Quiz {
       const ulPictures = document.createElement('ul');
       ulPictures.classList.add('questions__indicators-pictures');
       sectionPictures.appendChild(ulPictures);
-      
+
       for (let i = 0; i < 10; i++) {
         const liPictures = document.createElement('li');
         liPictures.classList.add('questions__indicator');
@@ -234,34 +240,61 @@ export default class Quiz {
 
       this.answers.push(isCorrect);
 
-      this.nextQuestion(modalCard);
+      this.nextQuestion(modalCard, question);
 
     });
 
   }
 
-  nextQuestion(modalCard) { //рендерим следующий вопрос или рендерим результат
-    
-    console.log(this.questionIndex);
-    console.log(this.questions.length);
-    
+  nextQuestion(modalCard, question) { //рендерим следующий вопрос, если последний -  рендерим результат
 
     if (this.questionIndex !== this.questions.length - 1) { //не последний вопрос?
       this.questionIndex++;
       modalCard.classList.toggle('open'); //закрываем модалку
 
-      this.start();
+      this.start(); //следующий вопрос
 
     }
-    else { //следующий вопрос?
+    else { //последний вопрос? (значит 1-роунд окончен)
       modalCard.remove();
+      
+      let progress = getProgress();
+    
+    const currentType = this.type; //тип категории
+    const currentRoundIndex = this.roundIndex; //номер пройденного раунда
 
-      this.showResult();
+    if (!progress[currentType]) {
+      progress[currentType] = {}; // создаём объект, если его ещё нет
+    }
+
+    progress[currentType][currentRoundIndex] = {
+  currentQuestionIndex: this.questionIndex,
+  userScore: this.score,
+  userAnswers: this.answers,
+  // currentImages: this.questions.map(q => q.image),
+  
+  currImages: this.chunkedCategories[this.roundIndex].map(q => q.imageNum),
+  currName: this.chunkedCategories[this.roundIndex].map(q => q.name),
+  currAuthor: this.chunkedCategories[this.roundIndex].map(q => q.author),
+  currYear: this.chunkedCategories[this.roundIndex].map(q => q.year),
+  
+  
+  // infoList: this.questions.map(q => ({
+  //   name: q.name,
+  //   author: q.author,
+  //   year: q.year,
+  // }))
+};
+
+    saveProgress(progress); //Сохраняем прогресс в localStorage
+      
+
+      this.showResult(question);
     }
 
   }
 
-  showResult() { //рендер результата, рендерим 12 категории
+  showResult(question) { //рендер результата, рендерим 12 категории
 
     const app = document.getElementById('app');
 
@@ -348,35 +381,38 @@ export default class Quiz {
     modalBodyFinish.appendChild(modalButtonsFinish);
 
     app.appendChild(modalCardFinish);
-    modalCardFinish.classList.toggle('open');
+    modalCardFinish.classList.toggle('open'); //показываем модалку - результат
+
+
+
+    
+
+
 
     const buttonsFinish = document.querySelector('.modal__buttons-finish');
     const btnFinish = buttonsFinish.querySelectorAll('.modal__btn-finish');
     btnFinish.forEach((btn) => {
       btn.addEventListener('click', () => {
-        modalCardFinish.classList.toggle('open');
-        app.innerHTML = '';
+        modalCardFinish.classList.toggle('open'); //скрываем модалку - результат
+        app.innerHTML = ''; //очищаем страницу
 
-        if (btn.classList.contains('next')) { //переход на следующую категорию (роунд 2) 
-          console.log('next');
-            this.handleRoundComplete(); //
+        if (btn.classList.contains('next')) { //переход на следующую категорию (на роунд 2) 
+          this.handleRoundComplete(); //
         }
         if (btn.classList.contains('home')) { //переход на главную
           renderMainMenu(); //работает
         }
-        if (btn.classList.contains('next-quiz')) { //переход на следующую категорию (роунд 2) 
-          console.log('next-quiz');
+        if (btn.classList.contains('next-quiz')) { //переход на следующую категорию (на роунд 2) 
           this.handleRoundComplete(); //
         }
         if (btn.classList.contains('no')) { //переход на главную
           renderMainMenu(); //работает
         }
-        if (btn.classList.contains('yes')) { //начать заново текущие 10 вопросов this.start(); // перезапуск викторины
-          console.log('yes');
+        if (btn.classList.contains('yes')) { //начать заново текущие 10 вопросов (перезапуск)//сброс индикаторов //сброс ответов в localstorage??
 
           // const indicators = document.querySelectorAll('.questions__indicator');
           // console.log(indicators);
-          
+
           // indicators.forEach(indicator => {
           //   indicator.classList.remove('success');
           //   indicator.classList.remove('error');
@@ -393,16 +429,15 @@ export default class Quiz {
 
   }
 
-   handleRoundComplete() { //рендер 12 категории и ?рендерим следующий раунд
-    console.log('отображаем категории');
-    
-    console.log(this.chunkedCategories[this.roundIndex]);
-    
-    // if (chunkedCategories.length === (this.questions.length + 2) {}
+  handleRoundComplete() { //рендер 12 категории и ?рендерим следующий раунд
 
-    renderCategories(this.type)
-    
-    
+    renderCategories(this.type);
+
+
+
+    // if (this.chunkedCategories.length === (this.questions.length + 2) {
+    //}
+
 
     // отображаем опять категории - список 12 категории //
     // пройденные категории - 1. картинка уже цветная, 2. поверх внизу картинки оверлай с надписью score, 3. сверху картинки появляется score
