@@ -1,11 +1,12 @@
 import { artistCategories, pictureCategories, getCategories } from './getCategories.js';
 import { startQuiz } from './startQuiz.js';
 import { getProgress, saveProgress } from './progressStorage.js';
+import { playSound, currentAudio, soundEnabled, soundVolume } from './playSound.js';
 
 export async function renderCategories(type) { //рендер 12 раундов
 
   const progress = getProgress();
-  
+
   await getCategories();
 
   if (type === 'artists') {
@@ -84,15 +85,22 @@ export async function renderCards(categoryArray, type) { //показываем 
       categoriesText.appendChild(categoriesTextSpan);
 
       categoriesItemScore.addEventListener('click', (e) => { //При нажатии на кнопку score - рендерим картинки всех раундов
-        e.stopPropagation();
 
+        e.stopPropagation();
+        
+        if (currentAudio) { //останавливаем предыдущий аудио
+          currentAudio.pause();
+          currentAudio.currentTime = 0;
+        }
+        playSound('/assets/sound/gamestart.mp3'); //включаем аудио
+        
         app.innerHTML = '';
         const imagesFinalCard = document.createElement('section');
         imagesFinalCard.classList.add('imagesFinal__card');
 
         const imageList = progress[type]?.[index]?.currImages; //картинки из localStorage
-        console.log(imageList);
-        
+        // console.log(imageList);
+
 
         imageList.forEach((imageNum, i) => {
 
@@ -141,6 +149,12 @@ export async function renderCards(categoryArray, type) { //показываем 
   const categoriesItemsElements = document.querySelectorAll('.categories__item');
   categoriesItemsElements.forEach((categoriesItemsElement, index) => {
     categoriesItemsElement.addEventListener('click', (e) => { //при нажатии на кнопки artists и pictures - переходим в раунды
+
+      if (currentAudio) { //останавливаем предыдущий аудио
+        currentAudio.pause();
+        currentAudio.currentTime = 0;
+      }
+      playSound('/assets/sound/choice.mp3'); //включаем аудио
 
       if (type === 'artists') {
         startQuiz(chunkedCategories[index], 'artists', index, chunkedCategories); //передаем массив 1 роунда с 10 вопросами по artists
