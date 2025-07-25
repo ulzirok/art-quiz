@@ -5,7 +5,6 @@ import { getProgress, saveProgress } from './progressStorage.js';
 export async function renderCategories(type) { //рендер 12 раундов
 
   const progress = getProgress();
-  console.log(progress);
   
   await getCategories();
 
@@ -60,10 +59,10 @@ export async function renderCards(categoryArray, type) { //показываем 
     categoriesImg.src = `assets/img/${chunkedCategory[0].imageNum}.jpg`;
     categoriesItem.appendChild(categoriesImg);
 
-    console.log(progress[type]?.[index]?.currImages); // картинки
-    console.log(progress[type]?.[index]?.currName); // name
-    console.log(progress[type]?.[index]?.currAuthor); // author
-    console.log(progress[type]?.[index]?.currYear); // year
+    // console.log(progress[type]?.[index]?.currImages); // картинки
+    // console.log(progress[type]?.[index]?.currName); // name
+    // console.log(progress[type]?.[index]?.currAuthor); // author
+    // console.log(progress[type]?.[index]?.currYear); // year
 
     const infoName = progress[type]?.[index]?.currName;
     const infoAuthor = progress[type]?.[index]?.currAuthor;

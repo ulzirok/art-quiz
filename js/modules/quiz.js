@@ -64,7 +64,7 @@ export default class Quiz {
         const liArtist = document.createElement('li');
         liArtist.classList.add('questions__indicator');
 
-        if (this.answers[i] === true) {
+        if (this.answers[i] === true) { //если ответ данного вопроса правильный, то красим индикаторы
           liArtist.classList.add('success');
         } else if (this.answers[i] === false) {
           liArtist.classList.add('error');
@@ -102,7 +102,7 @@ export default class Quiz {
         const liPictures = document.createElement('li');
         liPictures.classList.add('questions__indicator');
 
-        if (this.answers[i] === true) {
+        if (this.answers[i] === true) { //если ответ данного вопроса правильный, то красим индикаторы
           liPictures.classList.add('success');
         } else if (this.answers[i] === false) {
           liPictures.classList.add('error');
@@ -124,9 +124,9 @@ export default class Quiz {
       app.appendChild(sectionPictures);
     }
 
-    document.querySelectorAll('.questions__answers-artists').forEach((answer) => { //ответ пользователя по Artists
+    document.querySelectorAll('.questions__answer-artists').forEach((answer) => { //ответ пользователя по Artists
       answer.addEventListener('click', (event) => {
-
+        event.stopPropagation()
         const selectedAnswer = event.target.textContent;
         this.handleAnswer(selectedAnswer, question, 'artists'); //прверка ответа
       });
@@ -134,7 +134,7 @@ export default class Quiz {
 
     document.querySelectorAll('.questions__img-pictures').forEach((answer) => { //ответ пользователя по Pictures
       answer.addEventListener('click', (event) => {
-
+        event.stopPropagation()
         const selectedSrc = event.target.src;
         const splitSrc = selectedSrc.split('/img/')[1];
         const selectedAnswer = splitSrc.replace('.jpg', '');
@@ -216,7 +216,7 @@ export default class Quiz {
 
     modalCard.classList.toggle('open'); //открываем модалку
 
-    document.querySelector('.modal__btn').addEventListener('click', () => { //кнопка next question
+    document.querySelector('.modal__btn').addEventListener('click', (e) => { //кнопка next question
 
       if (isCorrect) {
         this.score++; //если правильно, увеличиваем score
@@ -362,36 +362,39 @@ export default class Quiz {
     btnFinish.forEach((btn) => {
       btn.addEventListener('click', () => {
         modalCardFinish.classList.toggle('open'); //скрываем модалку - результат
-        app.innerHTML = ''; //очищаем страницу
+
 
         if (btn.classList.contains('next')) { //переход на страницу 12 раундов
+          app.innerHTML = ''; //очищаем страницу
           this.nextQuiz();
         }
         if (btn.classList.contains('home')) { //переход на главную
+          app.innerHTML = ''; //очищаем страницу
           renderMainMenu();
         }
         if (btn.classList.contains('next-quiz')) { //переход на страницу 12 раундов
+          app.innerHTML = ''; //очищаем страницу
           this.nextQuiz();
         }
         if (btn.classList.contains('no')) { //переход на главную
+          app.innerHTML = ''; //очищаем страницу
           renderMainMenu();
         }
         if (btn.classList.contains('yes')) { //начать текущий раунд заново (перезапуск раунда)
 
-          //сброс индикаторов //сброс ответов в localstorage??
+          const indicators = document.querySelectorAll('.questions__indicator');
+          console.log(indicators);
 
-          // const indicators = document.querySelectorAll('.questions__indicator');
-          // console.log(indicators);
-
-          // indicators.forEach(indicator => {
-          //   indicator.classList.remove('success');
-          //   indicator.classList.remove('error');
-          // });
+          indicators.forEach(indicator => {
+            indicator.classList.remove('success');
+            indicator.classList.remove('error');
+          });
 
           this.questionIndex = 0;
           this.score = 0;
+          this.answers = [];
+          app.innerHTML = ''; //очищаем страницу
           this.start();
-
         }
 
       });
