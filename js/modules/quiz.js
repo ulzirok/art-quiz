@@ -17,6 +17,11 @@ export default class Quiz {
     // console.log(this.chunkedCategories);
     // console.log(questions);
   }
+  
+  playSound(srcSound) {
+    const audio = new Audio(srcSound)
+    audio.play()
+  }
 
   start() { //начало Викторины - вызываем текущий вопрос
     const currentQuestion = this.questions[this.questionIndex];
