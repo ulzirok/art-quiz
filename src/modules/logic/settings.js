@@ -1,4 +1,4 @@
-import { renderMainMenu } from './renderMainMenu.js';
+import { renderMainMenu } from '../ui/renderMainMenu.js';
 export default class Settings {
   constructor() {
     this.audio = null;
@@ -32,8 +32,8 @@ export default class Settings {
       <section class="settings__card">
 
     <div class="settings__header">
-      <p class="settings__text"><span><img src="./assets/icons/prev.svg" alt="prev"></span> Settings</p>
-      <img src="./assets/icons/close.svg" alt="" class="settings__btn">
+      <p class="settings__text"><span><img src="assets/icons/prev.svg" alt="prev"></span> Settings</p>
+      <img src="assets/icons/close.svg" alt="" class="settings__btn">
     </div>
 
     <div class="settings__body">
@@ -108,10 +108,15 @@ export default class Settings {
   }
 
   listener() {
-    
+
     const settingsVolume = document.querySelector('.settings__volume-input');
     settingsVolume.addEventListener('input', () => {
       this.soundVolume = settingsVolume.value;
+
+      if (this.soundEnabled === false) {
+        this.soundVolume = 0;
+      }
+
 
       this.setSettings(); //сохраняем текущее значение в localStorage
     });
@@ -122,9 +127,11 @@ export default class Settings {
 
       if (this.soundEnabled === false) {
         volumeControl.src = 'assets/icons/mute.svg';
+        settingsVolume.value = 0;
       }
       else {
         volumeControl.src = 'assets/icons/volume.svg';
+        this.soundVolume = settingsVolume.value / 100 || 0.5;
       }
       this.setSettings(); //сохраняем текущее значение в localStorage
     });
@@ -144,14 +151,14 @@ export default class Settings {
     let min = 5;
 
     plus.addEventListener('click', () => {
-      
+
       if (this.time < max) {
         this.time += 5;
         span.textContent = this.time;
         this.setSettings(); //сохраняем текущее значение в localStorage
       }
     });
-    
+
     minus.addEventListener('click', () => {
       if (this.time > min) {
         this.time -= 5;
@@ -167,7 +174,7 @@ export default class Settings {
       settingsBtn.style.border = '2px solid transparent';
       settingsBtn.textContent = 'Saved';
       settingsBtn.style.fontWeight = 'bold';
-      
+
       this.setSettings(); //сохраняем все текущие значения в localStorage
     });
 

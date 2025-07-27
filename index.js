@@ -1,5 +1,5 @@
-import { renderMainMenu } from './js/modules/renderMainMenu.js';
-import Settings from './js/modules/settings.js';
+import { renderMainMenu } from './src/modules/ui/renderMainMenu.js';
+import Settings from './src/modules/logic/settings.js';
 
 document.addEventListener('DOMContentLoaded', () => {
   renderMainMenu();
