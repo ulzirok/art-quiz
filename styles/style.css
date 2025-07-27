@@ -471,7 +471,7 @@ input[type="range"]::-moz-range-thumb {
   width: 100%;
   display: flex;
   flex-wrap: wrap;
-  justify-content: space-between;
+  justify-content: center;
   gap: 10px;
   padding: 0 60px;
   margin-top: 3px;
@@ -479,7 +479,7 @@ input[type="range"]::-moz-range-thumb {
 
 .questions__answer-artists {
   width: 45%;
-  height: 50px;
+  height: 60px;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -744,16 +744,14 @@ input[type="range"]::-moz-range-thumb {
   }
 
   .questions__answers-artists {
-    width: 90%;
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: space-between;
+    width: 100%;
     gap: 10px;
+    padding: 0 60px;
   }
 
   .questions__answer-artists {
-    width: 500px;
-    height: 30px;
+    width: 45%;
+    height: 50px;
   }
 
   .categories__img {
@@ -768,8 +766,8 @@ input[type="range"]::-moz-range-thumb {
 }
 
 .questions__img-pictures {
-  width: 40%;
-  height: 250px;
+  width: 35%;
+  height: 210px;
   
 }
 
@@ -799,15 +797,13 @@ input[type="range"]::-moz-range-thumb {
 
   .questions__answers-artists {
     width: 90%;
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: space-between;
     gap: 10px;
+    padding: 0 20px;
   }
 
   .questions__answer-artists {
     width: 500px;
-    height: 30px;
+    height: 50px;
   }
 
   .categories__img {
@@ -863,16 +859,13 @@ input[type="range"]::-moz-range-thumb {
 
   .questions__answers-artists {
     width: 100%;
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: space-between;
     gap: 10px;
     padding: 0 60px;
   }
 
   .questions__answer-artists {
     width: 45%;
-    height: 30px;
+    height: 50px;
   }
 
   .categories__items {
@@ -950,15 +943,13 @@ input[type="range"]::-moz-range-thumb {
 
   .questions__answers-artists {
     width: 100%;
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: space-between;
     gap: 10px;
+    padding: 0 30px;
   }
 
   .questions__answer-artists {
     width: 45%;
-    height: 30px;
+    height: 45px;
   }
 
   .questions__images-pictures {
@@ -1031,15 +1022,13 @@ input[type="range"]::-moz-range-thumb {
   .questions__answers-artists {
     width: 100%;
     display: flex;
-    flex-wrap: wrap;
-    justify-content: space-between;
     gap: 10px;
     padding: 0 20px;
   }
 
   .questions__answer-artists {
     width: 47%;
-    height: 30px;
+    height: 40px;
   }
 
   .categories__items {
@@ -1107,6 +1096,19 @@ input[type="range"]::-moz-range-thumb {
   
 }
 
+.questions__answers-artists {
+    width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    padding: 0 10px;
+  }
+
+  .questions__answer-artists {
+    width: 47%;
+    height: 40px;
+  }
+
   .modal__body,
   .modal__body-finish {
     width: 280px;
@@ -1135,14 +1137,13 @@ input[type="range"]::-moz-range-thumb {
   width: 100%;
   display: flex;
   flex-wrap: wrap;
-  justify-content: space-between;
   gap: 10px;
   padding: 0 5px;
 }
 
 .questions__answer-artists {
   width: 100%;
-  height: 30px;
+  height: 40px;
 }
   
   .questions__images-pictures {
