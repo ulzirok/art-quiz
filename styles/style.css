@@ -1049,7 +1049,7 @@ input[type="range"]::-moz-range-thumb {
 
   .modal__body,
   .modal__body-finish {
-    width: 320px;
+    width: 400px;
   }
 
   .modal__icon-success img {
@@ -1111,7 +1111,7 @@ input[type="range"]::-moz-range-thumb {
 
   .modal__body,
   .modal__body-finish {
-    width: 280px;
+    width: 330px;
     padding: 20px 0;
   }
 
@@ -1160,7 +1160,7 @@ input[type="range"]::-moz-range-thumb {
 
   .modal__body,
   .modal__body-finish {
-    width: 280px;
+    width: 260px;
     padding: 20px 0;
   }
 
