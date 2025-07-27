@@ -1,9 +1,13 @@
-import { artistCategories, pictureCategories, getCategories } from './getCategories.js';
-import { startQuiz } from './startQuiz.js';
-import { getProgress, saveProgress } from './progressStorage.js';
-import { playSound, currentAudio, soundEnabled, soundVolume } from './playSound.js';
+import { artistCategories, pictureCategories, getCategories } from '../utils/getCategories.js';
+import { startQuiz } from '../logic/startQuiz.js';
+import { getProgress, saveProgress } from '../utils/progressStorage.js';
+import { playSound, currentAudio, soundEnabled, soundVolume } from '../utils/playSound.js';
+import { renderMainMenu } from './renderMainMenu.js';
 
 export async function renderCategories(type) { //рендер 12 раундов по выбранному типу
+
+  const btnGoBack = document.querySelector('.header__nav-btnPrev');
+  btnGoBack.style.display = 'none';
 
   const progress = getProgress(); //получаем данные из localStorage
 

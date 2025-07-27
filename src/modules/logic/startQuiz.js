@@ -1,4 +1,4 @@
-import { artistCategories, pictureCategories } from './getCategories.js';
+import { artistCategories, pictureCategories } from '../utils/getCategories.js';
 import Quiz from './quiz.js';
 
 export function startQuiz(questionsArray, type, roundIndex, chunkedCategories) { //Готовимся к Викторине

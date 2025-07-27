@@ -1,6 +1,7 @@
-import { getCategories } from './getCategories.js';
+import { getCategories } from '../utils/getCategories.js';
 import { renderCategories } from './renderCategories.js';
-import { playSound, currentAudio, soundEnabled, soundVolume } from './playSound.js';
+import { playSound, currentAudio, soundEnabled, soundVolume } from '../utils/playSound.js';
+import Quiz from '../logic/quiz.js';
 
 export function renderMainMenu() {
 
@@ -30,17 +31,20 @@ export function renderMainMenu() {
 }
 
 document.getElementById('header__nav-main').addEventListener('click', () => {
-  
+
   app.innerHTML = '';
-  
+
   if (currentAudio) { //останавливаем предыдущее фоновое аудио
     currentAudio.pause();
     currentAudio.currentTime = 0; //запускаем предыдущее фоновое аудио заново
   }
-  
-  const settingsBtn = document.querySelector('.header__nav-btn')
-  settingsBtn.style.display = 'block'
-  
+
+  const settingsBtn = document.querySelector('.header__nav-btn');
+  settingsBtn.style.display = 'block';
+
+  const btnGoBack = document.querySelector('.header__nav-btnPrev');
+  btnGoBack.style.display = 'none';
+
   renderMainMenu();
 })
 

@@ -1,8 +1,8 @@
-import { artistCategories, pictureCategories, getCategories } from './getCategories.js';
+import { artistCategories, pictureCategories, getCategories } from '../utils/getCategories.js';
 import { startQuiz } from './startQuiz.js';
-import { renderMainMenu } from './renderMainMenu.js';
-import { getProgress, saveProgress } from './progressStorage.js';
-import { renderCategories } from './renderCategories.js';
+import { renderMainMenu } from '../ui/renderMainMenu.js';
+import { getProgress, saveProgress } from '../utils/progressStorage.js';
+import { renderCategories } from '../ui/renderCategories.js';
 
 export default class Quiz {
   constructor(questions, type, roundIndex, chunkedCategories) { //принимаем массив и тип кнопки
@@ -26,9 +26,25 @@ export default class Quiz {
 
   start() { //начало Викторины - вызываем текущий вопрос
     const currentQuestion = this.questions[this.questionIndex];
+    this.getSoundSettings(); //получаем данные из localStorage
+
+    const btnToMainMenu = document.getElementById('header__nav-main');
+    btnToMainMenu.onclick = () => {
+      clearInterval(this.timerId);
+      app.innerHTML = '';
+      renderMainMenu();
+    };
+
+    const btnGoBack = document.querySelector('.header__nav-btnPrev');
+    btnGoBack.style.display = 'block';
+    btnGoBack.addEventListener('click', () => {
+      clearInterval(this.timerId);
+      app.innerHTML = '';
+      renderCategories(this.type);
+    });
+
     this.renderQuiz(currentQuestion);
 
-    this.getSoundSettings(); //получаем данные из localStorage
   }
 
   renderQuiz(question) { //рендер вопросов - Начало текущего раунда
@@ -83,7 +99,7 @@ export default class Quiz {
 
       const imgArtist = document.createElement('img');
       imgArtist.classList.add('questions__img-artists');
-      imgArtist.src = `./assets/img/${question.image}.jpg`;
+      imgArtist.src = `assets/img/${question.image}.jpg`;
 
       sectionArtists.appendChild(imgArtist);
 
@@ -148,7 +164,7 @@ export default class Quiz {
       question.answers.forEach((answer) => {
         const answerPictures = document.createElement('img');
         answerPictures.classList.add('questions__img-pictures');
-        answerPictures.src = `./assets/img/${answer}.jpg`;
+        answerPictures.src = `assets/img/${answer}.jpg`;
         answersPictures.appendChild(answerPictures);
       });
 
@@ -165,7 +181,7 @@ export default class Quiz {
         if (this.timerId) {
           clearInterval(this.timerId);
         }
-        
+
       });
     });
 
@@ -181,7 +197,7 @@ export default class Quiz {
         if (this.timerId) {
           clearInterval(this.timerId);
         }
-        
+
       });
     });
 
@@ -408,6 +424,9 @@ export default class Quiz {
     `;
     }
 
+    const btnGoBack = document.querySelector('.header__nav-btnPrev');
+    btnGoBack.style.display = 'none';
+
     modalBodyFinish.appendChild(modalButtonsFinish);
     app.appendChild(modalCardFinish);
     modalCardFinish.classList.toggle('open'); //показываем модалку - результат текущего раунда
@@ -469,7 +488,7 @@ export default class Quiz {
     renderCategories(this.type); //передаем текущий тип
 
   }
-  
+
   playSound(srcSound) {
     this.getSoundSettings(); //получаем данные из localStorage
 
