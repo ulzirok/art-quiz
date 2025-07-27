@@ -3,9 +3,9 @@ import { startQuiz } from './startQuiz.js';
 import { getProgress, saveProgress } from './progressStorage.js';
 import { playSound, currentAudio, soundEnabled, soundVolume } from './playSound.js';
 
-export async function renderCategories(type) { //рендер 12 раундов
+export async function renderCategories(type) { //рендер 12 раундов по выбранному типу
 
-  const progress = getProgress();
+  const progress = getProgress(); //получаем данные из localStorage
 
   await getCategories();
 
@@ -18,6 +18,9 @@ export async function renderCategories(type) { //рендер 12 раундов
 }
 
 export async function renderCards(categoryArray, type) { //показываем 12 раундов
+
+  const settingsBtn = document.querySelector('.header__nav-btn');
+  settingsBtn.style.display = 'none';
 
   const app = document.getElementById('app');
   app.innerHTML = '';
@@ -60,7 +63,7 @@ export async function renderCards(categoryArray, type) { //показываем 
     categoriesImg.src = `assets/img/${chunkedCategory[0].imageNum}.jpg`;
     categoriesItem.appendChild(categoriesImg);
 
-    // console.log(progress[type]?.[index]?.currImages); // картинки
+    // console.log(progress[type]?.[index]?.currImages); // pic
     // console.log(progress[type]?.[index]?.currName); // name
     // console.log(progress[type]?.[index]?.currAuthor); // author
     // console.log(progress[type]?.[index]?.currYear); // year
@@ -88,7 +91,7 @@ export async function renderCards(categoryArray, type) { //показываем 
 
         e.stopPropagation();
 
-        if (currentAudio) { //останавливаем предыдущий аудио
+        if (currentAudio) { //останавливаем предыдущее аудио
           currentAudio.pause();
           currentAudio.currentTime = 0;
         }
@@ -99,8 +102,6 @@ export async function renderCards(categoryArray, type) { //показываем 
         imagesFinalCard.classList.add('imagesFinal__card');
 
         const imageList = progress[type]?.[index]?.currImages; //картинки из localStorage
-        // console.log(imageList);
-
 
         imageList.forEach((imageNum, i) => {
 
@@ -150,7 +151,7 @@ export async function renderCards(categoryArray, type) { //показываем 
   categoriesItemsElements.forEach((categoriesItemsElement, index) => {
     categoriesItemsElement.addEventListener('click', (e) => { //при нажатии на кнопки artists и pictures - переходим в раунды
 
-      if (currentAudio) { //останавливаем предыдущий аудио
+      if (currentAudio) { //останавливаем предыдущее аудио
         currentAudio.pause();
         currentAudio.currentTime = 0;
       }
