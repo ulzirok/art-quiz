@@ -30,12 +30,17 @@ export function renderMainMenu() {
 }
 
 document.getElementById('header__nav-main').addEventListener('click', () => {
+  
   app.innerHTML = '';
-  if (currentAudio) { //останавливаем предыдущий аудио
+  
+  if (currentAudio) { //останавливаем предыдущее фоновое аудио
     currentAudio.pause();
-    currentAudio.currentTime = 0;
+    currentAudio.currentTime = 0; //запускаем предыдущее фоновое аудио заново
   }
-
+  
+  const settingsBtn = document.querySelector('.header__nav-btn')
+  settingsBtn.style.display = 'block'
+  
   renderMainMenu();
 })
 

@@ -74,6 +74,18 @@ body {
   background: transparent;
   border: none;
   outline: none;
+  cursor: pointer;
+}
+
+.header__nav-btnPrev {
+  font-size: 24px;
+  display: none;
+  cursor: pointer;
+}
+
+.header__nav-btn:hover {
+  transform: scale(1.1);
+  transition: 0.3s;
 }
 
 .footer {
@@ -173,6 +185,14 @@ body {
   gap: 20px 0;
 }
 
+.settings__btn {
+  cursor: pointer;
+}
+
+.settings__text {
+  cursor: pointer;
+}
+
 .settings__body input,
 .settings__answer-controls {
   width: 100%;
@@ -257,27 +277,28 @@ input[type="range"]::-moz-range-thumb {
   width: 100%;
   /* margin-top: 10px; */
   display: flex;
-  justify-content: space-between;
+  justify-content: center;
   cursor: pointer;
+  margin-top: 5px;
 }
 
 .settings__save-btn {
   display: inline-block;
   margin: 40px auto 0;
   width: 50%;
-  background-color: #ffbca2;
-  color: #000;
-  border: none;
+  background-color: transparent;
+  color: #fff;
+  border: 2px solid #fff;
   outline: none;
   border-radius: 60px;
   height: 40px;
-  font-size: 16px;
+  font-size: 18px;
   transition: 0.2s;
   cursor: pointer;
 }
 
 .settings__save-btn:hover {
-  background-color: #fff;
+  background-color: #ffbca2;
   color: #000;
 }
 
@@ -387,6 +408,21 @@ input[type="range"]::-moz-range-thumb {
 }
 
 /* Questions */
+.questions__time {
+  font-size: 25px;
+  background-color: #ffbca2;
+  color: #000;
+  width: 60px;
+  height: 60px;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  
+}
+
 .questions__card-artists,
 .questions__card-pictures {
   width: 100%;
@@ -673,6 +709,12 @@ input[type="range"]::-moz-range-thumb {
     width: 220px;
     height: 190px;
   }
+  
+  .questions__time {
+    width: 40px;
+    height: 40px;
+    font-size: 20px;
+  }
 }
 
 @media (max-width: 1366px) {
@@ -863,7 +905,18 @@ input[type="range"]::-moz-range-thumb {
   .footer {
     font-size: 14px;
   }
+  
+  .questions__card-artists,
+  .questions__card-pictures {
+    gap: 7px
+  }
 
+  .questions__time {
+    width: 30px;
+    height: 30px;
+    font-size: 16px;
+  }
+  
   .questions__indicators-artists,
   .questions__indicators-pictures {
     max-width: 290px;
@@ -932,6 +985,7 @@ input[type="range"]::-moz-range-thumb {
   .questions__card-artists,
   .questions__card-pictures {
     font-size: 16px;
+    margin-bottom: 10px;
   }
 
   .questions__img-artists {

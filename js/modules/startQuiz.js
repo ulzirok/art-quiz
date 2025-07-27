@@ -7,6 +7,7 @@ export function startQuiz(questionsArray, type, roundIndex, chunkedCategories) {
 
   const quiz = new Quiz(questions, type, roundIndex, chunkedCategories); //вызов класса Quiz - вызываем Викторину
   quiz.start(); //вызов метода класса Quiz - вызываем вопрос
+
 }
 
 function prepareQuestions(arrayQuestionsOfRound, type) { //готовим вопросы для Викторины

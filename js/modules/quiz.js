@@ -14,48 +14,25 @@ export default class Quiz {
     this.chunkedCategories = chunkedCategories;
     this.answers = [];
 
-    // console.log(this.chunkedCategories);
-    // console.log(questions);
-
-    this.soundEnabled = true; //по умолчанию вкл
-    this.soundVolume = 0.5; //по умолчанию
+    this.soundEnabled = true;
+    this.soundVolume = 0.5;
     this.audio = null;
+    this.timer = false;
+    this.time = 30;
+    this.timerId = null;
 
-  }
-
-  playSound(srcSound) {
-    if (!this.soundEnabled) {
-      return;
-    }
-
-    if (this.audio) {
-      this.audio.pause();
-      this.audio.currentTime = 0;
-    }
-
-    this.audio = new Audio(srcSound);
-    this.audio.play();
-  }
-
-  getSoundSettings() { //получение настроенных данных из localStorage
-    const savedSettings = JSON.parse(localStorage.getItem('settings'));
-
-    this.soundEnabled = savedSettings?.soundEnabled ?? true; //если пользователь еще не настроил (?? - если значение из localStorage - undefined Или null то soundEnabled будет true, иначе установленное значение)
-    this.soundVolume = savedSettings?.volume ?? 0.5;
-
-    this.soundEnabled = savedSettings?.soundEnabled ?? true;
-    this.soundVolume = savedSettings?.volume ?? 0.5;
+    this.getSoundSettings(); //получаем данные из localStorage
   }
 
   start() { //начало Викторины - вызываем текущий вопрос
     const currentQuestion = this.questions[this.questionIndex];
     this.renderQuiz(currentQuestion);
 
-    this.getSoundSettings();
+    this.getSoundSettings(); //получаем данные из localStorage
   }
 
   renderQuiz(question) { //рендер вопросов - Начало текущего раунда
-    console.log(question);
+    // console.log(question);  //вопросы
 
     const app = document.getElementById('app');
     app.innerHTML = '';
@@ -66,12 +43,35 @@ export default class Quiz {
     const sectionPictures = document.createElement('section');
     sectionPictures.classList.add('questions__card-pictures');
 
-    const time = document.createElement('div');
-    time.classList.add('questions__time-artists');
-    sectionArtists.appendChild(time);
+    if (this.timer) {
+      let timeLeft = Number(this.time);
 
-    const span = document.createElement('span');
-    time.appendChild(span);
+      const time = document.createElement('div');
+      time.classList.add('questions__time');
+
+      const span = document.createElement('span');
+      span.textContent = timeLeft;
+      time.appendChild(span);
+
+      if (this.type === 'artists') {
+        sectionArtists.appendChild(time);
+      } else if (this.type === 'pictures') {
+        sectionPictures.appendChild(time);
+      }
+
+      this.timerId = setInterval(() => {
+        timeLeft--;
+
+        if (timeLeft <= 0) {
+          clearInterval(this.timerId);
+          this.handleAnswer(null, question, this.type); //если время вышло и ответа нет
+        }
+
+        span.textContent = timeLeft;
+
+      }, 1000);
+
+    }
 
     if (this.type === 'artists') { //вопросы для Artists
 
@@ -155,11 +155,17 @@ export default class Quiz {
       app.appendChild(sectionPictures);
     }
 
+
     document.querySelectorAll('.questions__answer-artists').forEach((answer) => { //ответ пользователя по Artists
       answer.addEventListener('click', (event) => {
         event.stopPropagation();
         const selectedAnswer = event.target.textContent;
         this.handleAnswer(selectedAnswer, question, 'artists'); //прверка ответа
+
+        if (this.timerId) {
+          clearInterval(this.timerId);
+        }
+        
       });
     });
 
@@ -171,6 +177,11 @@ export default class Quiz {
         const selectedAnswer = splitSrc.replace('.jpg', '');
 
         this.handleAnswer(selectedAnswer, question, 'pictures'); //проверка ответа
+
+        if (this.timerId) {
+          clearInterval(this.timerId);
+        }
+        
       });
     });
 
@@ -178,11 +189,19 @@ export default class Quiz {
 
   handleAnswer(selectedAnswer, question, type) {  //проверяем ответы пользователя
 
-    const isCorrect = selectedAnswer === question.correctAnswer; //вернет true/false
+    let isCorrect;
+
+    if (selectedAnswer === null) {
+      isCorrect = false;
+    }
+    else {
+      isCorrect = selectedAnswer === question.correctAnswer;
+    }
 
     if (isCorrect) {
       this.playSound('assets/sound/correct.mp3');
     }
+
     else {
       this.playSound('assets/sound/wrong.mp3');
     }
@@ -297,7 +316,7 @@ export default class Quiz {
         currYear: this.chunkedCategories[this.roundIndex].map(q => q.year),
       };
 
-      saveProgress(progress); //Сохраняем прогресс (данные) по текущему раунду в localStorage
+      saveProgress(progress); //Сохраняем данные (прогресс) по текущему раунду в localStorage
 
       this.showResult(question); //показ резултата текущего раунда
     }
@@ -408,6 +427,9 @@ export default class Quiz {
         }
         if (btn.classList.contains('home')) { //переход на главную
           app.innerHTML = ''; //очищаем страницу
+
+          const settingsBtn = document.querySelector('.header__nav-btn');
+          settingsBtn.style.display = 'block';
           renderMainMenu();
         }
         if (btn.classList.contains('next-quiz')) { //переход на страницу 12 раундов
@@ -416,6 +438,9 @@ export default class Quiz {
         }
         if (btn.classList.contains('no')) { //переход на главную
           app.innerHTML = ''; //очищаем страницу
+
+          const settingsBtn = document.querySelector('.header__nav-btn');
+          settingsBtn.style.display = 'block';
           renderMainMenu();
         }
         if (btn.classList.contains('yes')) { //начать текущий раунд заново (перезапуск раунда)
@@ -444,6 +469,32 @@ export default class Quiz {
     renderCategories(this.type); //передаем текущий тип
 
   }
+  
+  playSound(srcSound) {
+    this.getSoundSettings(); //получаем данные из localStorage
 
+    if (!this.soundEnabled) {
+      return;
+    }
+
+    if (this.audio) {
+      this.audio.pause();
+      this.audio.currentTime = 0;
+    }
+
+    this.audio = new Audio(srcSound);
+    this.audio.play();
+  }
+
+  getSoundSettings() { //получение настроенных данных по Settings из localStorage
+    const savedSettings = JSON.parse(localStorage.getItem('quizSettings')) || {};
+
+    this.soundEnabled = savedSettings?.soundEnabled ?? true;
+    this.soundVolume = (savedSettings?.volume ?? 50) / 100;
+    this.timer = savedSettings.timer ?? false;
+    this.time = savedSettings.time ?? 30;
+
+    localStorage.setItem('quizSettings', JSON.stringify(savedSettings)); //сохранение текущих состоянии в localStorage
+  }
 
 } //конец класса Quiz
