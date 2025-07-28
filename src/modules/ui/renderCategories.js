@@ -95,10 +95,6 @@ export async function renderCards(categoryArray, type) { //показываем 
 
         e.stopPropagation();
 
-        if (currentAudio) { //останавливаем предыдущее аудио
-          currentAudio.pause();
-          currentAudio.currentTime = 0;
-        }
         playSound('assets/sound/gamestart.mp3'); //включаем аудио
 
         app.innerHTML = '';
@@ -141,6 +137,14 @@ export async function renderCards(categoryArray, type) { //показываем 
         }); //конец imageList.forEach
 
         app.appendChild(imagesFinalCard);
+        
+        const btnGoBack = document.querySelector('.header__nav-btnPrev');
+        btnGoBack.style.display = 'block';
+        btnGoBack.addEventListener('click', () => {
+          app.innerHTML = '';
+          playSound('assets/sound/gamestart.mp3'); //включаем аудио
+          renderCategories(type);
+        });
 
       }); //конец categoriesItemScore.addEventListener
 
@@ -184,6 +188,7 @@ function chunkedArray(array, size) { //принимает массив и кол
 
   return category; //будет 12 массивов (из 12 циклов)
 }
+
 
 
 
