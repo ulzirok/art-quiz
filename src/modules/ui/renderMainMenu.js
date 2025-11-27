@@ -28,7 +28,9 @@ export function renderMainMenu() {
     renderCategories('pictures'); //тип кнопки pictures
   });
 
-}
+} //конец
+
+
 
 document.getElementById('header__nav-main').addEventListener('click', () => {
 
